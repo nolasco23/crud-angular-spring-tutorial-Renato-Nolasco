@@ -1,0 +1,11 @@
+Instalações
+1. AngularCli
+    a. Importar componentes do Angular material
+2. Java - OpenJDK
+3. Instalar puglin da Loiane disponível para o VSCODE
+4. Para o BackEnd   
+    a. Framework Spring (não spring boot )
+    b. Lombok 
+5. Para rodar o spring pelo terminal executar "mvn spring-boot:run", caso não queira rodar pelo plugin do VSCODE. Obs.:Instalar o Maven no ambiente
+
+Comandos 
