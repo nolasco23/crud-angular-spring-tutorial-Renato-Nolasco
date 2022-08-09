@@ -15,7 +15,7 @@ export class CourseCreateComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: CoursesService,
+    private courseService: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location
   ) {
@@ -28,11 +28,13 @@ export class CourseCreateComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    this.service.save(this.form.value).subscribe(
+    this.courseService.save(this.form.value).subscribe(
       (result) => {
+        console.log(result);
         this.onSucess();
       },
       (error) => {
+        console.log(error);
         this.onError();
       }
     );

@@ -5,6 +5,7 @@ import { catchError, Observable, of } from 'rxjs';
 import { ErroDialogComponent } from 'src/app/shared/components/erro-dialog/erro-dialog.component';
 
 import { Course } from '../model/course';
+import { DialogService } from './../../shared/dialog.service';
 import { CoursesService } from './../services/courses.service';
 
 @Component({
@@ -17,13 +18,13 @@ export class CoursesComponent implements OnInit {
   displayedColumns = ['name', 'category', 'actions'];
 
   constructor(
-    private CoursesService: CoursesService,
+    private coursesService: CoursesService,
+    private dialogService: DialogService,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute
   ) {
-    //this.courses=[];
-    this.courses$ = this.CoursesService.list().pipe(
+    this.courses$ = this.coursesService.getListCourses().pipe(
       catchError((error) => {
         this.onError('Erro ao carregar cursos.');
         return of([]);
@@ -40,19 +41,36 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {}
 
   onAdd() {
-    // console.log( 'onAdd' );
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 
   onUpdate(id: string) {
-    console.log('onUpdate:' + id);
+    // console.log('onUpdate:' + id);
     this.router.navigate(['edit', id], { relativeTo: this.route });
+  }
 
-    // this.router.navigate(['new'], { relativeTo: this.route });
+  onReload() {
+    this.courses$ = this.coursesService.getListCourses();
   }
 
   onDelete(id: string) {
-    console.log('onDelete:' + id);
-    // this.router.navigate(['new'], { relativeTo: this.route });
+    this.dialogService
+      .openConfirmDialog('Are you sure to delete this record ?')
+      .afterClosed()
+      .subscribe(
+        (res) => {
+          console.log(res);
+          if (res) {
+            this.coursesService.deleteById(id).subscribe(
+              (data) => {
+                this.onReload();
+              },
+              (error) => console.log(error)
+            );
+            this.onReload();
+          }
+        },
+        (error) => console.log(error)
+      );
   }
 }
