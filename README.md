@@ -1,9 +1,4 @@
-# Padrões e Requisitos PDPJ
-
-Documentar o processo de estudos realizados por membros da equipe de desenvolvimento do TJES visando atender os padrões e requisitos de desenvolvimento proposto para os sistemas existentes e os novos disponibilizados para os TJs.
-
-
-
+ 
 ## Getting started
 
 Para rodar o front-end na pasta crud-angular execute o comando npm run start.
